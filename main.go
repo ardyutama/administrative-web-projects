@@ -6,7 +6,6 @@ package main
 import (
 	"awp/database"
 	"awp/models"
-	routes "awp/route"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -16,24 +15,25 @@ func main() {
 	if err := database.Connect(); err != nil {
 		log.Fatal(err)
 	}
-	database.Migrate(&models.Contact{},
+	database.Migrate(
+		&models.Role{},
 		&models.User{},
-		&models.Contract{},
-		&models.ContractRequestType{},
+		&models.ServiceType{},
 		&models.DiskType{},
 		&models.Network{},
 		&models.OperatingSystem{},
-		&models.Price{},
-		&models.Role{},
-		&models.Service{},
-		&models.ServiceType{},
-		&models.VMSpecification{},
 		&models.VMStatus{},
+		&models.Price{},
+		&models.VMSpecification{},
+		&models.Contact{},
+		&models.ContractRequestType{},
+		&models.Contract{},
+		&models.Service{},
 	)
 
 	app := fiber.New()
 
-	routes.SetupRoutes(app)
+	// routes.SetupRoutes(app)
 
 	app.Listen(":3000")
 }
