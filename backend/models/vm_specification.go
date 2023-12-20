@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type VMSpecification struct {
 	gorm.Model
 	ServiceID         uint
-	Name              string `json:"name"`
+	NameProject       string `json:"name_project"`
 	CPU               string `json:"cpu"`
 	Memory            string `json:"memory"`
 	HDD               string `json:"hdd"`
@@ -13,6 +13,7 @@ type VMSpecification struct {
 	NetworkID         uint
 	OperatingSystemID uint
 	VMStatusID        uint
+	PriceID           uint
 	Price             Price  `gorm:"foreignkey:PriceID"`
 	Purpose           string `json:"purpose"`
 }

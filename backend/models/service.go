@@ -12,10 +12,5 @@ type Service struct {
 	Revenue           float64 `json:"revenue"`
 	GLAccount         string  `json:"gl_account"`
 	AdditionalFeature string  `json:"additional_feature"`
-	VPCName           string  `json:"vpc_name"`
-	UserID            uint
-}
-
-type Services struct {
-	Services []Service `json:"services"`
+	UserID            uint    `json:"user_id"`
 }

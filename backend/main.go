@@ -6,6 +6,7 @@ package main
 import (
 	"awp/database"
 	"awp/models"
+	"awp/route"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,11 +32,12 @@ func main() {
 		&models.ObjectStorage{},
 		&models.Contract{},
 		&models.Service{},
+		&models.ResourcePerHour{},
 	)
 
 	app := fiber.New()
 
-	// routes.SetupRoutes(app)
+	route.ServiceRoutes(app)
 
 	app.Listen(":3000")
 }
