@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"awp/database"
+	"awp/handlers"
 	"awp/models"
 	"errors"
-	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
@@ -18,19 +18,8 @@ func GetAllContacts(c *fiber.Ctx) error {
 
 func AddContacts(c *fiber.Ctx) error {
 	u := new(models.Contact)
-	// Parse body into struct
-	if err := c.BodyParser(u); err != nil {
-		return c.Status(400).SendString(err.Error())
-	}
-
-	// Insert Employee into database
-	res := database.DB.Create(&u)
-
-	// Print result
-	log.Println(res)
-
-	// Return Employee in JSON format
-	return c.JSON(u)
+	handlers.BodyParser(c, &u)
+	return handlers.AddEntity(c, &u)
 }
 
 func DeleteContacts(c *fiber.Ctx) error {

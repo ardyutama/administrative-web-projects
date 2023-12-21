@@ -9,11 +9,11 @@ type VMSpecification struct {
 	CPU               string `json:"cpu"`
 	Memory            string `json:"memory"`
 	HDD               string `json:"hdd"`
-	DiskTypeID        uint
-	NetworkID         uint
-	OperatingSystemID uint
-	VMStatusID        uint
-	PriceID           uint
+	DiskTypeID        uint   `json:"disk_type_id"`
+	NetworkID         uint   `json:"network_id"`
+	OperatingSystemID uint   `json:"operating_system_id"`
+	VMStatusID        uint   `json:"vm_status_id"`
+	PriceID           uint   `json:"price_id"`
 	Price             Price  `gorm:"foreignkey:PriceID"`
 	Purpose           string `json:"purpose"`
 }

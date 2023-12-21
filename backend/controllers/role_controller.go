@@ -51,9 +51,7 @@ func DeleteRoles(c *fiber.Ctx) error {
 func EditRoles(c *fiber.Ctx) error {
 	role := new(models.Role)
 
-	if err := c.BodyParser(role); err != nil {
-		return c.Status(400).JSON(err.Error())
-	}
+	handlers.BodyParser(c, &role)
 
 	id := c.Params("id")
 

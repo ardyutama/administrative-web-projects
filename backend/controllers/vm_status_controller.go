@@ -49,13 +49,11 @@ func DeleteVMStatuses(c *fiber.Ctx) error {
 func EditVMStatuses(c *fiber.Ctx) error {
 	u := new(models.VMStatus)
 
-	if err := c.BodyParser(u); err != nil {
-		return c.Status(400).JSON(err.Error())
-	}
+	handlers.BodyParser(c, &u)
 
 	id := c.Params("id")
 
-	exist := new(models.DiskType)
+	exist := new(models.VMStatus)
 	res := database.DB.Model(&models.VMStatus{}).Where("id = ?", id).First(exist)
 
 	if res.Error != nil {

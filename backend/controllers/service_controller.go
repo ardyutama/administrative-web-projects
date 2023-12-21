@@ -2,35 +2,29 @@ package controllers
 
 import (
 	"awp/database"
+	"awp/handlers"
 	"awp/models"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
 
+func GetServices(c *fiber.Ctx) error {
+	u := []models.Service{}
+	database.DB.Preload("VMSpecifications").Find(&u)
+	return c.JSON(u)
+}
 func AddServices(c *fiber.Ctx) error {
 	service := new(models.Service)
-	vmSpec := new(models.VMSpecification)
+	// vmSpec := new(models.VMSpecification)
+	handlers.BodyParser(c, &service)
 
-	if err := c.BodyParser(service); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
-	}
-	fmt.Println(service)
+	// handlers.BodyParser(c, &vmSpec)
+	handlers.AddEntity(c, &service)
+	// vmSpec.ServiceID = service.ID
 
-	if err := c.BodyParser(vmSpec); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
-	}
-
-	if err := database.DB.Create(&service); err.Error != nil {
-		return fiber.NewError(fiber.StatusConflict, err.Error.Error())
-	}
-
-	vmSpec.ServiceID = service.ID
-
-	if err := database.DB.Create(&vmSpec); err.Error != nil {
-		return fiber.NewError(fiber.StatusConflict, err.Error.Error())
-	}
+	// if err := database.DB.Create(&vmSpec); err.Error != nil {
+	// 	return fiber.NewError(fiber.StatusConflict, err.Error.Error())
+	// }
 
 	return c.JSON(service)
-
 }
