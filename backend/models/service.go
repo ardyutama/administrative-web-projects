@@ -8,9 +8,9 @@ type Service struct {
 	NameService       string            `json:"name_service"`
 	TotalVM           int               `json:"total_vm"`
 	VMSpecifications  []VMSpecification `gorm:"foreignKey:ServiceID"`
-	ContractID        uint              `json:"contract_id"`
-	Revenue           float64           `json:"revenue"`
-	GLAccount         string            `json:"gl_account"`
+	Contract          Contract
+	Revenue           float64 `json:"revenue"`
+	GLAccount         string  `json:"gl_account"`
 	AdditionalFeature AdditionalFeature
 	UserID            uint `json:"user_id"`
 }

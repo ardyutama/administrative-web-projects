@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type VMSpecification struct {
 	gorm.Model
-	ServiceID         uint
+	ServiceID         uint   `json:"service_id"`
 	NameProject       string `json:"name_project"`
 	CPU               string `json:"cpu"`
 	Memory            string `json:"memory"`

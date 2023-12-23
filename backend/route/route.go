@@ -62,6 +62,8 @@ func ServiceRoutes(app fiber.Router) {
 
 	r.Get("services", controllers.GetServices)
 	r.Post("services", controllers.AddServices)
+	r.Delete("services/:id", controllers.DeleteServices)
 
+	r.Get("vmspecification", controllers.GetAllVMSpecifications)
 	r.Post("vmspecification", controllers.AddVMSpecifications)
 }
