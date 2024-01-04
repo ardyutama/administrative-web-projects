@@ -8,6 +8,7 @@ type Role struct {
 	Users []User `gorm:"foreignKey:RoleID;"`
 }
 
-type AddRole struct {
+type RoleResponse struct {
+	gorm.Model
 	Name string `json:"name"`
 }

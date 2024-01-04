@@ -1,14 +1,19 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Contract struct {
 	gorm.Model
-	ServiceID             uint   `json:"service_id"`
-	ContractRequestTypeID uint   `json:"contract_request_type_id"`
-	ContractDocumentDate  string `json:"contract_document_date"`
-	ContractDuration      string `json:"contract_duration"`
-	ContractExpired       string `json:"contract_expired"`
-	Credential            string `json:"credential"`
-	ContactID             uint   `json:"contact_id"`
+	VMSpecificationID     uint      `json:"vm_specification_id"`
+	ContractRequestTypeID uint      `json:"contract_request_type_id"`
+	ContractDocumentDate  time.Time `json:"contract_document_date"`
+	ContractDuration      int       `json:"contract_duration"`
+	ContractExpired       time.Time `json:"contract_expired"`
+	RequestBasedTypeID    uint      `json:"request_based_type_id"`
+	NumberModification    string    `json:"number_modification"`
+	Credential            string    `json:"credential"`
 }

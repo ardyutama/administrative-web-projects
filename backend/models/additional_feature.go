@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type AdditionalFeature struct {
 	gorm.Model
-	ServiceID     uint
-	BackupVM      string `json:"backup_vm"`
-	ObjectStorage ObjectStorage
+	ProjectID uint    `json:"project_id"`
+	Project   Project `gorm:"foreignkey:ProjectID"`
+	BackupVM  string  `json:"backup_vm"`
 }

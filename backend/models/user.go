@@ -4,10 +4,11 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	Username string    `json:"username" validate:"required" gorm:"unique"`
-	Password string    `json:"password" validate:"password"`
-	RoleID   uint      `json:"role_id"`
-	Services []Service `gorm:"foreignKey:UserID"`
+	Username                 string                   `json:"username" validate:"required" gorm:"unique"`
+	Password                 string                   `json:"password" validate:"password"`
+	RoleID                   uint                     `json:"role_id"`
+	VMSpecifications         []VMSpecification        `gorm:"foreignKey:UserID"`
+	VMSpecificationHistories []VMSpecificationHistory `gorm:"foreignKey:AddBy"`
 }
 type UserResponse struct {
 	Username string `json:"username"`
