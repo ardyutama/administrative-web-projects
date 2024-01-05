@@ -19,7 +19,12 @@ func GetAllContacts(c *fiber.Ctx) error {
 func AddContacts(c *fiber.Ctx) error {
 	u := new(models.Contact)
 	handlers.BodyParser(c, &u)
-	return handlers.AddEntity(c, &u)
+	handlers.AddEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.Contact{
+		Name:        u.Name,
+		PhoneNumber: u.PhoneNumber,
+		Email:       u.Email,
+	})
 }
 
 func DeleteContacts(c *fiber.Ctx) error {
@@ -42,7 +47,7 @@ func DeleteContacts(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete record"})
 	}
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditContacts(c *fiber.Ctx) error {
@@ -73,5 +78,5 @@ func EditContacts(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update record"})
 	}
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
 }

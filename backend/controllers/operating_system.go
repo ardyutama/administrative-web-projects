@@ -19,7 +19,10 @@ func GetOperatingSystems(c *fiber.Ctx) error {
 func AddOperatingSystems(c *fiber.Ctx) error {
 	u := new(models.OperatingSystem)
 	handlers.BodyParser(c, &u)
-	return handlers.AddUniqueEntity(c, &u)
+	handlers.AddUniqueEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.OperatingSystem{
+		Name: u.Name,
+	})
 }
 
 func DeleteOperatingSystems(c *fiber.Ctx) error {
@@ -43,7 +46,7 @@ func DeleteOperatingSystems(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete record"})
 	}
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditOperatingSystems(c *fiber.Ctx) error {
@@ -73,5 +76,5 @@ func EditOperatingSystems(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update record"})
 	}
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
 }

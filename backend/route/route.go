@@ -22,6 +22,16 @@ func ServiceRoutes(app fiber.Router) {
 	r.Delete("/servicetypes/:id", controllers.DeleteServiceTypes)
 	r.Put("/servicetypes/:id", controllers.EditServiceTypes)
 
+	r.Get("/vmtypes", controllers.GetVMTypes)
+	r.Post("/vmtypes", controllers.AddVMTypes)
+	r.Delete("/vmtypes/:id", controllers.DeleteVMTypes)
+	r.Put("/vmtypes/:id", controllers.EditVMTypes)
+
+	r.Get("/sitelocations", controllers.GetSiteLocations)
+	r.Post("/sitelocations", controllers.AddSiteLocations)
+	r.Delete("/sitelocations/:id", controllers.DeleteSiteLocations)
+	r.Put("/sitelocations/:id", controllers.EditSiteLocations)
+
 	r.Get("/disktypes", controllers.GetDiskTypes)
 	r.Post("/disktypes", controllers.AddDiskTypes)
 	r.Delete("/disktypes/:id", controllers.DeleteDiskTypes)
@@ -42,6 +52,11 @@ func ServiceRoutes(app fiber.Router) {
 	r.Delete("contractrequesttypes/:id", controllers.DeleteContractRequestTypes)
 	r.Put("contractrequesttypes/:id", controllers.EditContractRequestTypes)
 
+	r.Get("requestbasedtypes", controllers.GetRequestBasedTypes)
+	r.Post("requestbasedtypes", controllers.AddRequestBasedTypes)
+	r.Delete("requestbasedtypes/:id", controllers.DeleteRequestBasedTypes)
+	r.Put("requestbasedtypes/:id", controllers.EditRequestBasedTypes)
+
 	r.Get("contacts", controllers.GetAllContacts)
 	r.Post("contacts", controllers.AddContacts)
 	r.Delete("contacts/:id", controllers.DeleteContacts)
@@ -60,10 +75,9 @@ func ServiceRoutes(app fiber.Router) {
 	r.Get("contracts", controllers.GetContracts)
 	r.Post("contracts", controllers.AddContracts)
 
-	// r.Get("services", controllers.GetServices)
-	// r.Post("services", controllers.AddServices)
-	// r.Delete("services/:id", controllers.DeleteServices)
+	r.Post("projects", controllers.AddProjects)
+	r.Get("projects", controllers.GetProjects)
 
 	r.Get("vmspecification", controllers.GetAllVMSpecifications)
-	// r.Post("vmspecification", controllers.AddVMSpecifications)
+	r.Post("vmspecification", controllers.AddVMSpecifications)
 }

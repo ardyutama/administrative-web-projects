@@ -19,7 +19,10 @@ func GetContractRequestTypes(c *fiber.Ctx) error {
 func AddContractRequestTypes(c *fiber.Ctx) error {
 	u := new(models.ContractRequestType)
 	handlers.BodyParser(c, &u)
-	return handlers.AddUniqueEntity(c, &u)
+	handlers.AddUniqueEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.ContractRequestType{
+		Name: u.Name,
+	})
 }
 
 func DeleteContractRequestTypes(c *fiber.Ctx) error {
@@ -43,7 +46,7 @@ func DeleteContractRequestTypes(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete record"})
 	}
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditContractRequestTypes(c *fiber.Ctx) error {
@@ -73,5 +76,5 @@ func EditContractRequestTypes(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update record"})
 	}
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
 }

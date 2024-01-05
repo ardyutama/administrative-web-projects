@@ -11,7 +11,8 @@ import (
 func AddContracts(c *fiber.Ctx) error {
 	u := new(models.Contract)
 	handlers.BodyParser(c, &u)
-	return handlers.AddEntity(c, &u)
+	handlers.AddEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(u)
 }
 
 func GetContracts(c *fiber.Ctx) error {

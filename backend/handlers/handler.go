@@ -28,7 +28,7 @@ func AddUniqueEntity(c *fiber.Ctx, entity interface{}) error {
 		})
 	}
 	// Return entity in JSON format
-	return c.Status(fiber.StatusCreated).JSON(entity)
+	return nil
 }
 func AddEntity(c *fiber.Ctx, entity interface{}) error {
 	if err := database.DB.Create(entity).Error; err != nil {

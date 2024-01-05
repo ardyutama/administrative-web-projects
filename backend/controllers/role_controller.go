@@ -19,7 +19,10 @@ func GetAllRoles(c *fiber.Ctx) error {
 func AddRoles(c *fiber.Ctx) error {
 	u := new(models.Role)
 	handlers.BodyParser(c, &u)
-	return handlers.AddUniqueEntity(c, &u)
+	handlers.AddUniqueEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.RoleResponse{
+		Name: u.Name,
+	})
 }
 
 func DeleteRoles(c *fiber.Ctx) error {
@@ -45,7 +48,7 @@ func DeleteRoles(c *fiber.Ctx) error {
 
 	database.DB.Where("id = ?", id).Delete(&role)
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditRoles(c *fiber.Ctx) error {
@@ -57,5 +60,5 @@ func EditRoles(c *fiber.Ctx) error {
 
 	database.DB.Model(&models.Role{}).Where("id = ?", id).Update("name", role.Name)
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully updated"})
 }

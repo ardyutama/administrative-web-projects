@@ -19,7 +19,13 @@ func GetNetworks(c *fiber.Ctx) error {
 func AddNetworks(c *fiber.Ctx) error {
 	u := new(models.Network)
 	handlers.BodyParser(c, &u)
-	return handlers.AddUniqueEntity(c, &u)
+	handlers.AddUniqueEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.Network{
+		IPPublic: u.IPPublic,
+		IPLocal:  u.IPLocal,
+		Port:     u.Port,
+		VPCName:  u.VPCName,
+	})
 }
 
 func DeleteNetworks(c *fiber.Ctx) error {
@@ -42,7 +48,7 @@ func DeleteNetworks(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete record"})
 	}
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditNetworks(c *fiber.Ctx) error {
@@ -73,5 +79,5 @@ func EditNetworks(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update record"})
 	}
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
 }

@@ -20,7 +20,6 @@ type VMSpecificationHistory struct {
 	OperatingSystemID uint            `json:"operating_system_id"`
 	VMStatusID        uint            `json:"vm_status_id"`
 	PriceHistory      PriceHistory    `gorm:"foreignkey:VMSpecificationHistoryID"`
-	Network           Network         `gorm:"foreignkey:VMSpecificationID"`
 	Purpose           string          `json:"purpose"`
 	ContractHistory   ContractHistory `gorm:"foreignkey:VMSpecificationHistoryID"`
 	UserID            uint            `json:"user_id"`

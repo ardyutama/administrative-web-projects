@@ -18,7 +18,10 @@ func GetServiceTypes(c *fiber.Ctx) error {
 func AddServiceTypes(c *fiber.Ctx) error {
 	u := new(models.ServiceType)
 	handlers.BodyParser(c, &u)
-	return handlers.AddUniqueEntity(c, &u)
+	handlers.AddUniqueEntity(c, &u)
+	return c.Status(fiber.StatusCreated).JSON(&models.ServiceType{
+		Name: u.Name,
+	})
 }
 
 func DeleteServiceTypes(c *fiber.Ctx) error {
@@ -42,7 +45,7 @@ func DeleteServiceTypes(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete record"})
 	}
 
-	return c.Status(200).JSON("deleted")
+	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
 func EditServiceTypes(c *fiber.Ctx) error {
@@ -65,5 +68,5 @@ func EditServiceTypes(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Internal Server Error"})
 	}
 
-	return c.Status(400).JSON("updated")
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
 }

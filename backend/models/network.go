@@ -6,7 +6,7 @@ type Network struct {
 	gorm.Model
 	VMSpecificationID uint   `json:"vm_specification_id"`
 	IPPublic          string `json:"ip_public"`
-	IPLocal           string `json:"ip_local" gorm:"unique"`
+	IPLocal           string `json:"ip_local"`
 	Port              int    `json:"port"`
 	VPCName           string `json:"vpc_name"`
 }

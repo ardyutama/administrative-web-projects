@@ -10,23 +10,22 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetVMStatuses(c *fiber.Ctx) error {
-	u := []models.VMStatus{}
+func GetVMTypes(c *fiber.Ctx) error {
+	u := []models.VMType{}
 	database.DB.Find(&u)
 	return c.JSON(u)
 }
-
-func AddVMStatuses(c *fiber.Ctx) error {
-	u := new(models.VMStatus)
+func AddVMTypes(c *fiber.Ctx) error {
+	u := new(models.VMType)
 	handlers.BodyParser(c, &u)
 	handlers.AddUniqueEntity(c, &u)
-	return c.Status(fiber.StatusCreated).JSON(&models.VMStatus{
+	return c.Status(fiber.StatusCreated).JSON(&models.VMType{
 		Name: u.Name,
 	})
 }
 
-func DeleteVMStatuses(c *fiber.Ctx) error {
-	u := new(models.VMStatus)
+func DeleteVMTypes(c *fiber.Ctx) error {
+	u := new(models.VMType)
 
 	id := c.Params("id")
 
@@ -49,18 +48,19 @@ func DeleteVMStatuses(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{"message": "Successfully deleted"})
 }
 
-func EditVMStatuses(c *fiber.Ctx) error {
-	u := new(models.VMStatus)
+func EditVMTypes(c *fiber.Ctx) error {
+	u := new(models.VMType)
 
-	handlers.BodyParser(c, &u)
+	if err := c.BodyParser(u); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
 
 	id := c.Params("id")
 
-	exist := new(models.VMStatus)
-	res := database.DB.Model(&models.VMStatus{}).Where("id = ?", id).First(exist)
+	err := database.DB.Model(&models.VMType{}).Where("id = ?", id).Update("name", u.Name).Error
 
-	if res.Error != nil {
-		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// Handle the case where the record doesn't exist
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Record not found"})
 		}
@@ -68,11 +68,5 @@ func EditVMStatuses(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Internal Server Error"})
 	}
 
-	res = database.DB.Model(&models.VMStatus{}).Where("id = ?", id).Update("name", u.Name)
-	if res.Error != nil {
-		// Handle the error during update
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update record"})
-	}
-
-	return c.Status(400).JSON(fiber.Map{"message": "Successfully Updated"})
+	return c.Status(400).JSON(fiber.Map{"message": "Successfully updated"})
 }
