@@ -11,6 +11,7 @@ type Contract struct {
 	VMSpecificationID     uint      `json:"vm_specification_id"`
 	ContractRequestTypeID uint      `json:"contract_request_type_id"`
 	ContractDocumentDate  time.Time `json:"contract_document_date"`
+	DeployementDate       time.Time `json:"deployement_date"`
 	ContractDuration      int       `json:"contract_duration"`
 	ContractExpired       time.Time `json:"contract_expired"`
 	RequestBasedTypeID    uint      `json:"request_based_type_id"`
