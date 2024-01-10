@@ -10,6 +10,10 @@ export const Header = () => {
           href: '/management',
           name: 'Management',
         },
+        {
+          href: '/admin',
+          name: 'Admin',
+        },
       ];
     return (
         <div className="flex items-center py-4 px-6 justify-between border-solid border-b border-border">

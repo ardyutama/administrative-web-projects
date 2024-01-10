@@ -6,11 +6,8 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className='min-h-screen'>
-            <Header />
-            <div className="flex flex-col m-6 min-h-[90vh]">
-                {children}
-            </div>
+        <div className='justify-center flex items-center pt-8'>
+            {children}
         </div>
     )
 }
