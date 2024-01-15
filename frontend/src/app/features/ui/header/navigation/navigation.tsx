@@ -13,7 +13,7 @@ export const Navigation = ({
     return (
         <Link
             href={href}
-            className={`${pathname === href ? 'font-semibold' : 'font-normal text-slate-300'
+            className={`${pathname.startsWith(href) ? 'font-semibold' : 'font-normal text-slate-300'
                 } `}
         >
             {title}

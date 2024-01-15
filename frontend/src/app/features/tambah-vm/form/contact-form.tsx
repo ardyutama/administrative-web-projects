@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card"
 export const ContactForm = ({nextStep} : {nextStep: () => void}) => {
     return (
-        <Card className="w-[350px]" >
+        <>
             <CardHeader>
                 <CardTitle>Isi Kontak</CardTitle>
                 <CardDescription>Isikan Kontak Penanggung Jawab</CardDescription>
@@ -33,9 +33,6 @@ export const ContactForm = ({nextStep} : {nextStep: () => void}) => {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="flex justify-end">
-                <Button onClick={() => nextStep()}>Continue</Button>
-            </CardFooter>
-        </Card>
+            </>
     )
 }

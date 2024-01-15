@@ -29,7 +29,7 @@ import {
 
 import { labels } from "../../managements/vm-management/columns"
 
-export const VMSpecificationForm = ({nextStep} : {nextStep: () => void}) => {
+export const VMSpecificationForm = ({ nextStep }: { nextStep: () => void }) => {
 
     // const status = labels.find(
     //     (label) => label.value === row.getValue("vm_status")
@@ -45,7 +45,7 @@ export const VMSpecificationForm = ({nextStep} : {nextStep: () => void}) => {
     // }).format(amount);
 
     return (
-        <Card className="w-[500px]">
+        <>
             <CardHeader>
                 <CardTitle>Isi Spesifikasi VM </CardTitle>
                 <CardDescription>Isi data untuk mengisi spesifikasi VM yang akan dipakai</CardDescription>
@@ -191,9 +191,6 @@ export const VMSpecificationForm = ({nextStep} : {nextStep: () => void}) => {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="flex justify-end">
-                <Button onClick={() => nextStep()}>Continue</Button>
-            </CardFooter>
-        </Card>
+        </>
     )
 }

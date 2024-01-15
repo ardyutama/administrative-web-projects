@@ -13,7 +13,7 @@ import {
 
 export const AdministrationForm = ({nextStep} : {nextStep: () => void}) => {
     return (
-        <Card className="w-[350px]" >
+       <>
             <CardHeader>
                 <CardTitle>Isi Administrasi</CardTitle>
                 <CardDescription>Isikan sesuai dengan Projek Sekarang</CardDescription>
@@ -38,9 +38,6 @@ export const AdministrationForm = ({nextStep} : {nextStep: () => void}) => {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="flex justify-end">
-                <Button onClick={() => nextStep()}>Continue</Button>
-            </CardFooter>
-        </Card>
+        </>
     )
 }

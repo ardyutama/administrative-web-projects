@@ -3,14 +3,14 @@
 import { useState } from 'react'
 
 export function useMultiplestepForm(steps: number) {
-    const [currentStepIndex, setCurrentStepIndex] = useState(0)
+    const [currentStepIndex, setCurrentStepIndex] = useState(1);
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
     const nextStep = () => {
-        if (currentStepIndex < steps - 1) {
+        if (currentStepIndex < steps) {
             setCurrentStepIndex((i) => i + 1)
         }
-        if (currentStepIndex === 3) {
+        if (currentStepIndex === steps) {
             setShowSuccessMsg(true)
         }
     }
@@ -28,8 +28,8 @@ export function useMultiplestepForm(steps: number) {
     return {
         currentStepIndex,
         steps,
-        isFirstStep: currentStepIndex === 0,
-        isLastStep: currentStepIndex === steps - 1,
+        isFirstStep: currentStepIndex === 1,
+        isLastStep: currentStepIndex === steps,
         showSuccessMsg,
         goTo,
         nextStep,

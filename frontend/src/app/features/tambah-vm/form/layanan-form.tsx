@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/select"
 
 
-export const LayananForm = ({nextStep} : {nextStep: () => void}) => {
+export const LayananForm = ({ nextStep }: { nextStep: () => void }) => {
     return (
-        <Card className="w-[350px]" >
+        <>
             <CardHeader>
                 <CardTitle>Isi Layanan</CardTitle>
                 <CardDescription>Mari Kita Buat Layanan</CardDescription>
@@ -52,9 +52,7 @@ export const LayananForm = ({nextStep} : {nextStep: () => void}) => {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter className="flex justify-end">
-                <Button onClick={() => nextStep()}>Continue</Button>
-            </CardFooter>
-        </Card>
+            
+        </>
     )
 }
