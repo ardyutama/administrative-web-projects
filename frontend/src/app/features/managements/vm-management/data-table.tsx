@@ -17,6 +17,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import React from "react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -39,7 +40,7 @@ export function DataTable<TData, TValue>({
                 ip_public: false,
                 ip_local: false,
                 port: false,
-                vm_type:false,
+                vm_type: false,
                 vm_status: false,
                 service_type: false,
                 vpc_name: false,
@@ -51,7 +52,7 @@ export function DataTable<TData, TValue>({
                 request_based_type: false,
                 gl_account: false,
                 deployement_date: false,
-                cost_center:false,
+                cost_center: false,
                 purpose: false,
                 user_id: false,
             }
@@ -84,9 +85,9 @@ export function DataTable<TData, TValue>({
                 </TableHeader>
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => {
+                        table.getRowModel().rows.map((row,index) => {
                             return (
-                                <>
+                                <React.Fragment key={index}>
                                     <TableRow
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
@@ -98,14 +99,14 @@ export function DataTable<TData, TValue>({
                                         ))}
                                     </TableRow>
                                     {row.getIsExpanded() && (
-                                        <tr>
+                                        <tr key={index}>
                                             {/* 2nd row is a custom 1 cell row */}
                                             <td colSpan={row.getVisibleCells().length}>
                                                 {renderSubComponent({ row })}
                                             </td>
                                         </tr>
                                     )}
-                                </>
+                                </React.Fragment>
                             )
                         })
                     ) : (

@@ -1,10 +1,11 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import { Download, PlusCircle } from "lucide-react"
 import { DataTable } from "./data-table"
 import { columns } from "./columns"
 import { data } from './mock-data'
 import { renderSubComponent } from "./subcomponent"
-import {SearchBar} from '@/ui/search-bar'
+import { SearchBar } from '@/ui/search-bar'
 import { useRouter } from 'next/navigation'
 export function VMManagement() {
     const router = useRouter()
@@ -24,7 +25,7 @@ export function VMManagement() {
                 </div>
             </div>
             <div className="flex gap-4">
-                <SearchBar />
+                 <SearchBar />
             </div>
             <div className="flex">
                 <div className="w-full grow">

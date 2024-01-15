@@ -1,4 +1,5 @@
 export type VirtualMachine = {
+    id: number,
     project_name: string
     service_type: string
     vm_type: string
@@ -27,5 +28,4 @@ export type VirtualMachine = {
     purpose: string
     site_location: string
     user_id: number
-    
 }

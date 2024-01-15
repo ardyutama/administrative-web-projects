@@ -1,9 +1,9 @@
 import { ManagementSection } from "./management-section";
-import { Tabs } from "./tabs";
-export const Section = () => {
+
+export const Section = ({children}: {children: React.ReactNode}) => {
     return (
         <ManagementSection>
-            <Tabs />
+            {children}
         </ManagementSection>
     )
 }

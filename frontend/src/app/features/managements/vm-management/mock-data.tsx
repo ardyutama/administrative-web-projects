@@ -1,6 +1,7 @@
 import { VirtualMachine } from "./type"
 export const data:VirtualMachine[] = [
     {
+        id:1,
         project_name: "Project 1",
         service_type: "VM",
         vm_type: "Database",
@@ -31,6 +32,7 @@ export const data:VirtualMachine[] = [
         user_id: 1
     },
     {
+        id:2,
         project_name: "Project 1",
         service_type: "Load Balancer",
         vm_type: "Service",

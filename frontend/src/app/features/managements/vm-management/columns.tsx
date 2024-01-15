@@ -1,9 +1,7 @@
 'use client'
-import { Badge } from "@/components/ui/badge"
 import { ColumnDef } from "@tanstack/react-table"
 import { Activity, Ban, MinusCircle, ChevronDown, ChevronRight } from "lucide-react"
 import { VirtualMachine } from "./type"
-import { Button } from "@/components/ui/button"
 
 export const labels = [
     {
@@ -188,15 +186,5 @@ export const columns: ColumnDef<VirtualMachine>[] = [
     {
         accessorKey: "segment",
         header: "Segment"
-    },
-    {
-        id: "action",
-        cell: ({ row }) => {
-            return (
-                <Button variant={"ghost"} size={"icon"}>
-                    <ChevronRight className="h-4 w-4" />
-                </Button>
-            )
-        }
     }
-]
+];

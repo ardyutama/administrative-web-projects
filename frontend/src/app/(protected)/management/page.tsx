@@ -1,6 +1,6 @@
-import { Section } from "@/app/features/managements/section"
+import { redirect } from "next/navigation"
 export default function Management() {
     return (
-            <Section />     
+        redirect('/management/layanan')
     )
 }
