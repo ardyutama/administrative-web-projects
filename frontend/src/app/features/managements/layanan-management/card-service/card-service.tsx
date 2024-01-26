@@ -1,38 +1,41 @@
 import { Button } from "@/components/ui/button"
+import { getRupiah } from "@/hooks/getRupiah"
 import { ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { CardServiceType } from "./type"
 
-export const CardService = () => {
+export const CardService = ({ id, project_name, service_name, total_vm, revenue }: CardServiceType) => {
     return (
-        <div className="py-6 px-9 flex justify-between border rounded-xl text-left shadow">
-            <div className="flex flex-col gap-1">
-                <div className="text-sm">
-                    Project Name
-                </div>
-                <div className="text-lg font-bold">
-                    Nama Layanan
-                </div>
-            </div>
-            <div className="flex gap-2 items-center">
+        <Link href={"layanan/" + id}>
+            <div className="py-6 pl-9 pr-4 flex justify-between border rounded-xl text-left shadow hover:bg-slate-100 hover:cursor-pointer">
                 <div className="flex flex-col gap-1">
                     <div className="text-sm">
-                        Total VM
+                        {project_name}
                     </div>
                     <div className="text-lg font-bold">
-                        30
+                        {service_name}
                     </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                    <div className="text-sm text-right">
-                        Revenue
+                <div className="flex gap-2 items-center">
+                    <div className="flex flex-col gap-1">
+                        <div className="text-sm">
+                            Total VM
+                        </div>
+                        <div className="text-lg font-bold">
+                            {total_vm}
+                        </div>
                     </div>
-                    <div className="text-lg font-bold">
-                        Rp9000,000
+                    <div className="flex flex-col gap-1">
+                        <div className="text-sm text-right">
+                            Revenue
+                        </div>
+                        <div className="text-lg font-bold">
+                            {getRupiah(revenue)}
+                        </div>
                     </div>
+                    <ChevronRight className="h-4 w-4 ml-4" />
                 </div>
-                <Button variant={"ghost"} size={"icon"}>
-                    <ChevronRight className="h-4 w-4" />
-                </Button>
             </div>
-        </div>
+        </Link>
     )
 }

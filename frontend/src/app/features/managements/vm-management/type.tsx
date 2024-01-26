@@ -29,3 +29,7 @@ export type VirtualMachine = {
     site_location: string
     user_id: number
 }
+
+export type VirtualMachineList = {
+    data: VirtualMachine[]
+}

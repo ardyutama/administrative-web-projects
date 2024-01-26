@@ -11,7 +11,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-export const AdministrationForm = ({nextStep} : {nextStep: () => void}) => {
+export const AdministrationForm = () => {
     return (
        <>
             <CardHeader>

@@ -1,196 +1,263 @@
-'use client'
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Calendar } from "@/components/ui/calendar"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+"use client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { format, add } from "date-fns";
+import { SelectItem } from "@/components/ui/select";
+import { FormField, FormLabel } from "@/components/ui/form";
 
-import { labels } from "../../managements/vm-management/columns"
+import { CardLayoutForm } from "@/ui/card-layout-form";
+import { getRupiah } from "@/hooks/getRupiah";
+import { useEffect, useState } from "react";
+import { DropdownInput } from "@/ui/dropdown-input";
+import { FormInput } from "@/ui/form-input/form-input";
+import { DateInput } from "@/ui/date-input/date-input";
+import { VMStatusTypes, DiskTypes, OSTypes, pricesTypes } from "../../mock";
+export const VMSpecificationForm = ({ form }: any) => {
+  const [contractDurationMonth, setContractDurationMonth] =
+    useState<string>("0");
+  const [contractDurationDay, setContractDurationDay] = useState<string>("0");
+  const [startDate, setStartDate] = useState<string>();
 
-export const VMSpecificationForm = ({ nextStep }: { nextStep: () => void }) => {
+  let price = 90000;
 
-    // const status = labels.find(
-    //     (label) => label.value === row.getValue("vm_status")
-    // )
-
-    // if (!status) {
-    //     return null
-    // }
-    // const amount = parseFloat(row.getValue("price"))
-    // const formatted = new Intl.NumberFormat("en-US", {
-    //     style: "currency",
-    //     currency: "IDR",
-    // }).format(amount);
-
+  function getTotalDay() {
     return (
-        <>
-            <CardHeader>
-                <CardTitle>Isi Spesifikasi VM </CardTitle>
-                <CardDescription>Isi data untuk mengisi spesifikasi VM yang akan dipakai</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="grid w-full gap-4 items-center">
-                    <div className="w-1/2 space-y-1.5">
-                        <Label htmlFor="vm_status">Status VM</Label>
-                        <Select>
-                            <SelectTrigger id="vm_status">
-                                <SelectValue placeholder="Select" />
-                            </SelectTrigger>
-                            <SelectContent position="popper">
-                                <SelectItem value="next">Next.js</SelectItem>
-                                <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                                <SelectItem value="astro">Astro</SelectItem>
-                                <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <h4 className="text-xl font-semibold">Spesifikasi</h4>
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-4">
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="cpu">CPU</Label>
-                            <Input id="cpu" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="memory">Memory</Label>
-                            <Input id="memory" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="hdd">HDD Size</Label>
-                            <Input id="hdd" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="disk_type">Disk Type</Label>
-                            <Select>
-                                <SelectTrigger id="disk_type">
-                                    <SelectValue placeholder="Select" />
-                                </SelectTrigger>
-                                <SelectContent position="popper">
-                                    <SelectItem value="next">Next.js</SelectItem>
-                                    <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                                    <SelectItem value="astro">Astro</SelectItem>
-                                    <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-                    <h4 className="text-xl font-semibold">Network</h4>
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-4">
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="ip_public">IP Public</Label>
-                            <Input id="ip_public" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="ip_private">IP Private</Label>
-                            <Input id="ip_private" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="port">Port</Label>
-                            <Input id="port" />
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="vpc_name">VPC Name</Label>
-                            <Input id="vpc_name" />
-                        </div>
-                    </div>
-                    <h4 className="text-xl font-semibold">Contract</h4>
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-4">
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="contract_document_date">Tanggal Request Dokumen</Label>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant={"outline"}
-                                        className={
-                                            "w-full pl-3 text-left font-normal"
-                                        }
-                                    >
-                                        <span>Pick a date</span>
-                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                    <Calendar
-                                        mode="single"
-                                        disabled={(date) =>
-                                            date > new Date() || date < new Date("1900-01-01")
-                                        }
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="contract_duration">Duration</Label>
-                            <div className="flex gap-2">
-                                <Input id="contract_duration_month" placeholder="Bulan" />
-                                <Input id="contract_duration_day" placeholder="Hari" />
-                            </div>
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="deployement_date">Deployement Date</Label>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant={"outline"}
-                                        className={
-                                            "w-full pl-3 text-left font-normal"
-                                        }
-                                    >
-                                        <span>Pick a date</span>
-                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                    <Calendar
-                                        mode="single"
-                                        disabled={(date) =>
-                                            date > new Date() || date < new Date("1900-01-01")
-                                        }
-                                        initialFocus
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                        <div className="max-w-sm space-y-1.5">
-                            <Label htmlFor="contract_expired">Kontrak Expired</Label>
-                            <Input id="contract_expired" />
-                        </div>
-                    </div>
-                    <div>
-                        <Label htmlFor="price">Price Estimation</Label>
-                        <div className="flex flex-col pt-2">
-                            <div className={`flex items-center ${labels[0].color}`}>
-                                <span className="truncate text-base">{labels[0].label}</span>
-                            </div>
-                            <div className="text-xl font-bold">
-                                Rp9000,0000
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </CardContent>
-        </>
-    )
-}
+      parseInt(contractDurationMonth?.toString() || "0") * 30 +
+      parseInt(contractDurationDay?.toString() || "0")
+    );
+  }
+
+  function addDateByDay(date: string, value: number) {
+    return add(date, {
+      days: value,
+    });
+  }
+
+  useEffect(() => {
+    if (
+      form.getValues("contract.contract_document_date") &&
+      contractDurationMonth &&
+      contractDurationDay
+    ) {
+      const startDate = form.getValues("contract.contract_document_date");
+      const totalDays = getTotalDay();
+      const expirationDate = format(addDateByDay(startDate, totalDays), "P");
+      form.setValue("contract.contract_duration", totalDays);
+      form.setValue("contract.contract_expired", expirationDate);
+    }
+  }, [contractDurationMonth, contractDurationDay, startDate, form]);
+
+  const handleDateSelect = (date: any) => {
+    let newDate = format(date, "P");
+    setStartDate(newDate);
+    form.setValue("contract.contract_document_date", newDate);
+  };
+
+  return (
+    <>
+      <CardLayoutForm
+        title="Isi Spesifikasi VM"
+        description="Isi data untuk mengisi spesifikasi VM yang akan dipakai"
+        classnames="w-[500px]"
+      >
+        <div className="grid w-full gap-4 items-center">
+          <div className="w-1/2 space-y-1.5">
+            <FormField
+              control={form.control}
+              name="vm_status_id"
+              defaultValue=""
+              render={({ field }) => (
+                <DropdownInput
+                  title="Status VM"
+                  field={field}
+                  placeholder="Pilih Status VM"
+                >
+                  {VMStatusTypes.map((item, index) => (
+                    <SelectItem key={index} value={item.id.toString()}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </DropdownInput>
+              )}
+            />
+          </div>
+
+          <h4 className="text-xl font-semibold">Spesifikasi</h4>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4">
+            <FormField
+              control={form.control}
+              name="cpu"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput
+                  title="CPU"
+                  number
+                  placeholder="ex. 1 Core"
+                  field={field}
+                />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="memory"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput
+                  title="Memory"
+                  number
+                  field={field}
+                  placeholder="ex. 1 GB"
+                />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="hdd"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput
+                  title="HDD Size"
+                  number
+                  field={field}
+                  placeholder="ex. 1 GB"
+                />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="disk_type_id"
+              defaultValue=""
+              render={({ field }) => (
+                <DropdownInput
+                  title="Tipe Hardisk"
+                  placeholder="Pilih Salah Satu"
+                  field={field}
+                >
+                  {DiskTypes.map((item, index) => (
+                    <SelectItem key={index} value={item.id.toString()}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </DropdownInput>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="operating_system_id"
+              defaultValue=""
+              render={({ field }) => (
+                <DropdownInput
+                  title="Operating System"
+                  placeholder="Pilih Salah Satu"
+                  field={field}
+                >
+                  {OSTypes.map((item, index) => (
+                    <SelectItem key={index} value={item.id.toString()}>
+                      {item.name}
+                    </SelectItem>
+                  ))}
+                </DropdownInput>
+              )}
+            />
+          </div>
+          <h4 className="text-xl font-semibold">Network</h4>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4">
+            <FormField
+              control={form.control}
+              name="network.ip_public"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput title="IP Public" field={field} />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="network.ip_local"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput title="IP Local" field={field} />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="network.port"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput title="Port" field={field} number />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="network.vpc_name"
+              defaultValue=""
+              render={({ field }) => (
+                <FormInput title="VPC Name" field={field} />
+              )}
+            />
+          </div>
+
+          <h4 className="text-xl font-semibold">Contract</h4>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4">
+            <FormField
+              control={form.control}
+              name="contract.contract_document_date"
+              render={({ field }) => (
+                <DateInput field={field} title="Tanggal Dokumen" />
+              )}
+            />
+            <div className="space-y-2">
+              <FormLabel>Duration</FormLabel>
+              <div className="flex gap-2">
+                <Input
+                  id="contract_duration_month"
+                  placeholder="Bulan"
+                  value={contractDurationMonth}
+                  type="number"
+                  defaultValue={"0"}
+                  onChange={(e) => setContractDurationMonth(e.target.value)}
+                />
+                <Input
+                  id="contract_duration_day"
+                  placeholder="Hari"
+                  type="number"
+                  defaultValue={"0"}
+                  value={contractDurationDay}
+                  onChange={(e) => setContractDurationDay(e.target.value)}
+                />
+              </div>
+            </div>
+            <FormField
+              control={form.control}
+              name="contract.deployement_date"
+              render={({ field }) => (
+                <DateInput field={field} title="Tanggal Deploy" />
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="contract.contract_expired"
+              render={({ field }) => (
+                <DateInput field={field} title="Tanggal Expired" disabled />
+              )}
+            />
+          </div>
+          <div>
+            <Label htmlFor="price">Price Estimation</Label>
+            <div className="flex flex-col pt-2">
+              <div className="text-xl font-bold">{getRupiah(price)}</div>
+            </div>
+          </div>
+        </div>
+      </CardLayoutForm>
+    </>
+  );
+};
