@@ -6,6 +6,7 @@ import (
 	"awp/models"
 
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm/clause"
 )
 
 func AddContracts(c *fiber.Ctx) error {
@@ -17,6 +18,6 @@ func AddContracts(c *fiber.Ctx) error {
 
 func GetContracts(c *fiber.Ctx) error {
 	u := []models.Contract{}
-	database.DB.Preload("Service").Find(&u)
+	database.DB.Preload(clause.Associations).Find(&u)
 	return c.JSON(u)
 }

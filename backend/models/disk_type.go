@@ -7,3 +7,7 @@ type DiskType struct {
 	Name             string `json:"name"`
 	VMSpecifications []VMSpecification
 }
+
+type DiskTypeResponse struct {
+	Name string `json:"name"`
+}

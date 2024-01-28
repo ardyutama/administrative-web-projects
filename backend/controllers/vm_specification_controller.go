@@ -6,11 +6,12 @@ import (
 	"awp/models"
 
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm/clause"
 )
 
 func GetAllVMSpecifications(c *fiber.Ctx) error {
 	u := []models.VMSpecification{}
-	database.DB.Find(&u)
+	database.DB.Preload("Contract.ContractRequestType").Preload("Contract.RequestBasedType").Preload(clause.Associations).Find(&u)
 	return c.JSON(u)
 }
 
