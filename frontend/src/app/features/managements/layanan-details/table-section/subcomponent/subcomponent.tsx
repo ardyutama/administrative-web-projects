@@ -3,7 +3,7 @@ import { Row } from "@tanstack/react-table"
 import { VirtualMachine } from "../type";
 import { Separator } from "@/components/ui/separator";
 import { LayoutDetail } from "./layout";
-import { NameValueItem } from "../../../ui/name-value-item";
+import { NameValueItem } from "../../../../ui/name-value-item";
 export const renderSubComponent = ({ row }: { row: Row<VirtualMachine> }) => {
     return (
         <>

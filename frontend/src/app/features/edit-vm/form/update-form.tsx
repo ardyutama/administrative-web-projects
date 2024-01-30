@@ -1,8 +1,8 @@
 "use client";
-import { CardLayoutForm } from "../../ui/card-layout-form";
+import { CardLayoutForm } from "@/ui/card-layout-form";
 import { FormField } from "@/components/ui/form";
-import { DropdownInput } from "../../ui/dropdown-input";
-import { FormInput } from "../../ui/form-input/form-input";
+import { DropdownInput } from "@/ui/dropdown-input";
+import { FormInput } from "@/ui/form-input/form-input";
 
 export const UpdateVM = ({ form }: any) => {
   return (

@@ -13,6 +13,19 @@ func GetProjects(c *fiber.Ctx) error {
 	database.DB.Preload("VMSpecifications").Preload("VMSpecifications.Price").Preload("VMSpecifications.Network").Preload("VMSpecifications.Contract").Find(&u)
 	return c.JSON(u)
 }
+
+func GetProjectsByID(c *fiber.Ctx) error {
+
+	projectID := c.Params("id")
+
+	u := models.Project{}
+	database.DB.Preload("VMSpecifications").
+		Preload("VMSpecifications.Price").
+		Preload("VMSpecifications.Network").
+		Preload("VMSpecifications.Contract").
+		First(&u, projectID)
+	return c.JSON(u)
+}
 func AddProjects(c *fiber.Ctx) error {
 	u := new(models.Project)
 	handlers.BodyParser(c, &u)

@@ -23,7 +23,7 @@ export const Card = ({ amount, unit, type }: Card) => {
       </div>
       <div className="flex flex-col">
         <div className="text-2xl font-bold">{getRupiah(amount)}</div>
-        <div className="text-base">{unit}</div>
+        <div className="text-base">{unit} VM Unit</div>
       </div>
     </div>
   );

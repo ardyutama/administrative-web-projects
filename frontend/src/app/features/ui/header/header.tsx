@@ -3,7 +3,7 @@ import { Navigation } from './navigation'
 export const Header = () => {
     const navs = [
         {
-          href: '/dashboard',
+          href: '/',
           name: 'Overview',
         },
         {

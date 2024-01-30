@@ -1,7 +1,7 @@
-import { redirect } from 'next/navigation';
+import { DashboardSection } from '@/features/dashboard/section';
 
 export default function Home() {
   return (
-      redirect('/dashboard')
+      <DashboardSection />
   )
 }

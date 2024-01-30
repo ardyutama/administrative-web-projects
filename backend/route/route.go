@@ -72,6 +72,7 @@ func ServiceRoutes(app fiber.Router) {
 
 	r.Post("projects", controllers.AddProjects)
 	r.Get("projects", controllers.GetProjects)
+	r.Get("projects/:id", controllers.GetProjectsByID)
 
 	r.Get("vm-specifications", controllers.GetAllVMSpecifications)
 	r.Post("vm-specifications", controllers.AddVMSpecifications)

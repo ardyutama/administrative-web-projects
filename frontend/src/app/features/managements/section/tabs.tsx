@@ -1,6 +1,6 @@
 'use client'
 import { LayananManagement } from "../layanan-management"
-import { VMManagement } from "../vm-management"
+import VMManagement from "../vm-management/vm-management"
 import { TabsContent } from "@/components/ui/tabs"
 export const Tabs = () => {
     return (

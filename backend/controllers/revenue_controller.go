@@ -15,6 +15,7 @@ func GetProjectRevenue(c *fiber.Ctx) error {
 	// Map each project to a ProjectDashboardResponse object
 	for i, project := range u {
 		response := models.ProjectDashboardResponse{
+			ID:          project.ID,
 			ServiceName: project.ServiceName,
 			ProjectName: project.ProjectName,
 			Revenue:     project.Revenue,
@@ -28,7 +29,7 @@ func GetProjectRevenue(c *fiber.Ctx) error {
 }
 
 func GetTotalRevenue(c *fiber.Ctx) error {
-	var results []struct {
+	var results struct {
 		Total_vm int     `json:"total_vm"`
 		Revenue  float64 `json:"revenue"`
 	}
@@ -37,14 +38,14 @@ func GetTotalRevenue(c *fiber.Ctx) error {
 		Select("COUNT(vm_specifications.id) as total_vm, SUM(CASE WHEN vm_specifications.vm_status_id = 1 THEN prices.active_running_price WHEN vm_specifications.vm_status_id = 2 THEN prices.active_stopped_price ELSE 0 END) as revenue").
 		Joins("LEFT JOIN vm_specifications ON projects.id = vm_specifications.project_id").
 		Joins("LEFT JOIN prices ON vm_specifications.id = prices.vm_specification_id").
-		Scan(&results)
+		First(&results)
 
 	// Print the results
 	return c.JSON(&results)
 }
 
 func GetActiveRunningRevenue(c *fiber.Ctx) error {
-	var results []struct {
+	var results struct {
 		Total_vm int     `json:"total_vm"`
 		Revenue  float64 `json:"revenue"`
 	}
@@ -61,7 +62,7 @@ func GetActiveRunningRevenue(c *fiber.Ctx) error {
 }
 
 func GetActiveStoppedRevenue(c *fiber.Ctx) error {
-	var results []struct {
+	var results struct {
 		Total_vm int     `json:"total_vm"`
 		Revenue  float64 `json:"revenue"`
 	}

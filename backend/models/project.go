@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Project struct {
 	gorm.Model
@@ -17,6 +19,7 @@ type Project struct {
 }
 
 type ProjectDashboardResponse struct {
+	ID          uint    `json:"id"`
 	ServiceName string  `json:"service_name"`
 	ProjectName string  `json:"project_name"`
 	Revenue     float64 `json:"revenue" gorm:"-"`
