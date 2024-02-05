@@ -18,8 +18,11 @@ func GetAllRoles(c *fiber.Ctx) error {
 
 func AddRoles(c *fiber.Ctx) error {
 	u := new(models.Role)
-	handlers.BodyParser(c, &u)
-	handlers.AddUniqueEntity(c, &u)
+	handlers.BodyParser(c, u)
+	if err := handlers.AddUniqueEntity(c, u); err != nil {
+		// Handle the error response
+		return err
+	}
 	return c.Status(fiber.StatusCreated).JSON(&models.RoleResponse{
 		Name: u.Name,
 	})

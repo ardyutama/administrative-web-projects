@@ -18,17 +18,14 @@ func BodyParser(c *fiber.Ctx, entity interface{}) error {
 func AddUniqueEntity(c *fiber.Ctx, entity interface{}) error {
 	if err := database.DB.Create(entity).Error; err != nil {
 		if strings.Contains(err.Error(), "Duplicate entry") {
-			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-				"error": "Entity with the same name already exists",
-			})
+			return fiber.NewError(fiber.StatusConflict, "{\"error\": \"Entity with the same name already exists\"}")
 		}
 		// Handle other errors
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "An unexpected error occurred",
-		})
+		return fiber.NewError(fiber.StatusInternalServerError, "{\"error\": \"An unexpected error occurred\"}")
 	}
 	// Return entity in JSON format
 	return nil
+
 }
 func AddEntity(c *fiber.Ctx, entity interface{}) error {
 	if err := database.DB.Create(entity).Error; err != nil {

@@ -4,7 +4,7 @@ type StatusType =
   | "total"
   | "active-running"
   | "active-stopped"
-  | "total-removed";
+  | "removed";
 
 export const getStatusType = (type: StatusType) => {
   switch (type) {
@@ -26,7 +26,7 @@ export const getStatusType = (type: StatusType) => {
         label: "Active-Stopped",
         color: "red-500 ",
       };
-    case "total-removed":
+    case "removed":
       return {
         icon: MinusCircle,
         label: "Removed",

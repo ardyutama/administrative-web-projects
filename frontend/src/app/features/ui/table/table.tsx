@@ -3,6 +3,7 @@ import React from "react"
 import {
     ColumnDef,
     Row,
+    TableState,
     flexRender,
     getCoreRowModel,
     getExpandedRowModel,
@@ -22,42 +23,23 @@ import {
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    renderSubComponent: (props: { row: Row<TData> }) => React.ReactElement;
-    getRowCanExpand: (row: Row<TData>) => boolean;
+    state?: Partial<TableState> | undefined
+    renderSubComponent?: (props: { row: Row<TData> }) => React.ReactElement;
+    getRowCanExpand?: (row: Row<TData>) => boolean;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     renderSubComponent,
+    state,
     getRowCanExpand,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
-        state: {
-            columnVisibility: {
-                ip_public: false,
-                ip_local: false,
-                port: false,
-                vm_type: false,
-                vm_status: false,
-                service_type: false,
-                vpc_name: false,
-                no_modin: false,
-                contract_request_type: false,
-                contract_document_date: false,
-                contract_duration: false,
-                contract_expired: false,
-                request_based_type: false,
-                gl_account: false,
-                deployement_date: false,
-                cost_center: false,
-                purpose: false,
-                user_id: false,
-            }
-        },
         getRowCanExpand,
+        state,
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
     })
@@ -102,7 +84,7 @@ export function DataTable<TData, TValue>({
                                         <tr key={index}>
                                             {/* 2nd row is a custom 1 cell row */}
                                             <td colSpan={row.getVisibleCells().length}>
-                                                {renderSubComponent({ row })}
+                                                {renderSubComponent ? renderSubComponent({ row }): ''}
                                             </td>
                                         </tr>
                                     )}

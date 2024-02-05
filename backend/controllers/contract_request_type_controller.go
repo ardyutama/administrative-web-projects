@@ -19,7 +19,10 @@ func GetContractRequestTypes(c *fiber.Ctx) error {
 func AddContractRequestTypes(c *fiber.Ctx) error {
 	u := new(models.ContractRequestType)
 	handlers.BodyParser(c, &u)
-	handlers.AddUniqueEntity(c, &u)
+	if err := handlers.AddUniqueEntity(c, &u); err != nil {
+		// Handle the error response
+		return err
+	}
 	return c.Status(fiber.StatusCreated).JSON(&models.ContractRequestType{
 		Name: u.Name,
 	})

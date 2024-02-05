@@ -17,8 +17,11 @@ func GetDiskTypes(c *fiber.Ctx) error {
 }
 func AddDiskTypes(c *fiber.Ctx) error {
 	u := new(models.DiskType)
-	handlers.BodyParser(c, &u)
-	handlers.AddUniqueEntity(c, &u)
+	handlers.BodyParser(c, u)
+	if err := handlers.AddUniqueEntity(c, u); err != nil {
+		// Handle the error response
+		return err
+	}
 	return c.Status(fiber.StatusCreated).JSON(&models.DiskType{
 		Name: u.Name,
 	})

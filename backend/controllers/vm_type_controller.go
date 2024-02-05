@@ -18,7 +18,10 @@ func GetVMTypes(c *fiber.Ctx) error {
 func AddVMTypes(c *fiber.Ctx) error {
 	u := new(models.VMType)
 	handlers.BodyParser(c, &u)
-	handlers.AddUniqueEntity(c, &u)
+	if err := handlers.AddUniqueEntity(c, &u); err != nil {
+		// Handle the error response
+		return err
+	}
 	return c.Status(fiber.StatusCreated).JSON(&models.VMType{
 		Name: u.Name,
 	})

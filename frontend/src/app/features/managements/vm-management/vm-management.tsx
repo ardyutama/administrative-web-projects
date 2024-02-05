@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Download } from "lucide-react"
-import { data } from './mock-data'
 import { TableVMManagement } from "./table-vm-management/table-vm-management"
 import { ButtonNavigation } from "@/ui/button/button"
-import { VirtualMachine } from "./type"
+import { VirtualMachineResponse } from "../type"
 
-async function getData(): Promise<VirtualMachine[]> {
-    return data
+async function getData(): Promise<VirtualMachineResponse[]> {
+    const res = await fetch(`${process.env.API_ROUTE}/vm-specifications`,{ cache: 'no-store' });
+    return res.json();
 }
 
 export default async function VMManagement() {

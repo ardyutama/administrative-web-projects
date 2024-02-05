@@ -1,4 +1,4 @@
-export const LayoutDetail = ({ title, children }: { title: string, children: React.ReactNode }) => {
+export const LayoutDropdownTable = ({ title, children }: { title: string, children: React.ReactNode }) => {
     return (
         <>
             <div className="flex flex-col">

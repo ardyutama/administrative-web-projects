@@ -10,7 +10,11 @@ import (
 
 func GetProjects(c *fiber.Ctx) error {
 	u := []models.Project{}
-	database.DB.Preload("VMSpecifications").Preload("VMSpecifications.Price").Preload("VMSpecifications.Network").Preload("VMSpecifications.Contract").Find(&u)
+	database.DB.Preload("VMSpecifications").
+		Preload("VMSpecifications.Price").
+		Preload("VMSpecifications.Network").
+		Preload("VMSpecifications.Contract").
+		Find(&u)
 	return c.JSON(u)
 }
 

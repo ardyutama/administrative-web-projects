@@ -1,17 +1,16 @@
 "use client";
+import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  ChevronRight,
-  PencilIcon,
-} from "lucide-react";
-import { VirtualMachine } from "../type";
+import { ChevronRight, PencilIcon } from "lucide-react";
+import { VirtualMachineResponse } from "../../type";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getRupiah } from "@/hooks/getRupiah";
 import { getStatusType } from "@/hooks/getStatus";
-import React from "react";
+import { format, differenceInMonths, differenceInWeeks, differenceInDays } from 'date-fns';
 
-export const columns: ColumnDef<VirtualMachine>[] = [
+
+export const columns: ColumnDef<VirtualMachineResponse>[] = [
   {
     id: "expanded",
     header: () => null,
@@ -31,25 +30,25 @@ export const columns: ColumnDef<VirtualMachine>[] = [
     ),
   },
   {
+    accessorKey: "service_name",
+    header: "Layanan",
+    cell: ({ row }) => (
+      <div className="w-full text-nowrap">{row.getValue("service_name")}</div>
+    ),
+  },
+  {
     accessorKey: "project_name",
-    header: "Project",
+    header: "Projek",
     cell: ({ row }) => (
       <div className="w-full text-nowrap">{row.getValue("project_name")}</div>
     ),
   },
   {
-    accessorKey: "service_type",
-  },
-
-  {
-    accessorKey: "vm_type",
-  },
-  {
     accessorKey: "name",
     header: "Name",
-  },
-  {
-    accessorKey: "vm_status",
+    cell: ({ row }) => (
+      <div className="w-full text-nowrap">{row.getValue("name")}</div>
+    ),
   },
   {
     accessorKey: "cpu",
@@ -87,14 +86,19 @@ export const columns: ColumnDef<VirtualMachine>[] = [
     ),
   },
   {
-    accessorKey: "price",
+    accessorKey: "Price",
     header: () => <div className="text-right w-full">Price</div>,
     cell: ({ row }) => {
-      const { icon, color, label } = getStatusType(row.getValue("vm_status"));
-
+      const { icon, color, label } = getStatusType(row.original.vm_status);
+      let price;
+      if (row.original.vm_status == "active-running") {
+        price = row.original.Price.active_running_price;
+      } else {
+        price = row.original.Price.active_stopped_price;
+      }
       return (
         <div className="flex flex-col">
-          <div className="text-right">{getRupiah(row.getValue("price"))}</div>
+          <div className="text-right">{getRupiah(price)}</div>
           <div className={`flex items-center text-${color} self-end`}>
             <span className="truncate text-xs">{label}</span>
             {icon && React.createElement(icon, { className: "h-4 w-4 ml-1" })}
@@ -104,46 +108,11 @@ export const columns: ColumnDef<VirtualMachine>[] = [
     },
   },
   {
-    accessorKey: "ip_public",
-  },
-  {
-    accessorKey: "ip_local",
-  },
-  {
-    accessorKey: "port",
-  },
-  {
-    accessorKey: "gl_account",
-  },
-  {
-    accessorKey: "cost_center",
-  },
-  {
-    accessorKey: "vpc_name",
-  },
-  {
-    accessorKey: "no_modin",
-  },
-  {
-    accessorKey: "contract_document_date",
-  },
-  {
-    accessorKey: "deployement_date",
-  },
-  {
-    accessorKey: "contract_duration",
-    header: "Durasi Kontrak",
-  },
-  {
-    accessorKey: "contract_expired",
-  },
-  {
-    accessorKey: "request_based_type",
-    header: "Dasar Permintaan",
-  },
-  {
     accessorKey: "site_location",
     header: "Location",
+    cell: ({ row }) => (
+      <div className="w-full text-nowrap">{row.getValue("site_location")}</div>
+    ),
   },
   {
     accessorKey: "purpose",
@@ -152,6 +121,32 @@ export const columns: ColumnDef<VirtualMachine>[] = [
   {
     accessorKey: "segment",
     header: "Segment",
+  },
+  {
+    accessorKey: "Duration",
+    cell: ({ row }) => {
+      function calculateDuration(currentDate: string, contractExpiryDate:string) {
+        const monthsDiff = differenceInMonths(contractExpiryDate, currentDate);
+        const weeksDiff = differenceInWeeks(contractExpiryDate, currentDate);
+        const daysDiff = differenceInDays(contractExpiryDate, currentDate);
+    
+        if (monthsDiff >= 1) {
+            return `${monthsDiff} month(s)`;
+        } else if (weeksDiff >= 1) {
+            return `${weeksDiff} week(s)`;
+        } else if (daysDiff >= 1) {
+            return `${daysDiff} day(s)`;
+        } else {
+            return 'less than 1 month';
+        }
+    }
+    const duration = calculateDuration(row.original.Contract.contract_document_date, row.original.Contract.contract_expired)
+      return (
+        <div className="flex flex-col truncate">
+          {duration}
+        </div>
+      );
+    },
   },
   {
     id: "actions",

@@ -1,16 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { NameValueItem } from "@/ui/name-value-item";
 import { Trash2 } from "lucide-react";
-import { DataTable } from "./table-section/data-table";
-import { columns } from "./table-section/columns";
-// import { data } from "./mock-data";
-import { renderSubComponent } from "./table-section/subcomponent";
 import { ButtonNavigation } from "@/ui/button/button";
+import { ProjectResponse } from "../type";
 import { getRupiah } from "@/hooks/getRupiah";
 import { format } from "date-fns";
 
 
-export const LayananDetailsSection = async ({ data, children }: { data: any, children: React.ReactNode }) => {
+export const LayananDetailsSection = async ({ data, children }: { data: ProjectResponse, children: React.ReactNode }) => {
  
   return (
     <div className="mx-16 my-6 gap-6 flex flex-col">
@@ -19,7 +16,7 @@ export const LayananDetailsSection = async ({ data, children }: { data: any, chi
         <div className="flex gap-6">
           <NameValueItem name="Nama Layanan" value={data.service_name} />
           <NameValueItem name="Project Name" value={data.project_name} />
-          <NameValueItem name="Segmen" value={data.sso} />
+          <NameValueItem name="Segmen" value={data.segment} />
         </div>
         <div className="flex gap-6">
           <NameValueItem name="Revenue" value={getRupiah(data.revenue)} />
@@ -39,12 +36,6 @@ export const LayananDetailsSection = async ({ data, children }: { data: any, chi
         </div>
       </div>
       <div className="w-full grow">
-        {/* <DataTable
-          columns={columns}
-          data={data}
-          getRowCanExpand={() => true}
-          renderSubComponent={renderSubComponent}
-        /> */}
         {children}
       </div>
     </div>

@@ -1,16 +1,17 @@
 'use client'
-import { DataTable } from "./data-table"
+import { DataTable } from  "@/ui/table"
 import { columns } from "./columns";
-// import { data } from "./mock-data";
-import { renderSubComponent } from "./subcomponent";
+import { renderSubComponent } from "@/ui/table";
+import { Suspense } from "react";
 export const TableDetails = ({data}: {data:any}) => {
-    console.log(data)
     return (
+      <Suspense fallback={<div>Loading...</div>}>
         <DataTable
           columns={columns}
-          data={data.VMSpecifications}
+          data={data}
           getRowCanExpand={() => true}
           renderSubComponent={renderSubComponent}
         />
+        </Suspense>
     )
 }

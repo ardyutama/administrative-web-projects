@@ -19,7 +19,10 @@ func GetNetworks(c *fiber.Ctx) error {
 func AddNetworks(c *fiber.Ctx) error {
 	u := new(models.Network)
 	handlers.BodyParser(c, &u)
-	handlers.AddUniqueEntity(c, &u)
+	if err := handlers.AddUniqueEntity(c, &u); err != nil {
+		// Handle the error response
+		return err
+	}
 	return c.Status(fiber.StatusCreated).JSON(&models.Network{
 		IPPublic: u.IPPublic,
 		IPLocal:  u.IPLocal,
